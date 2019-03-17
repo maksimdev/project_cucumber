@@ -7,7 +7,6 @@ const initialState = {
 function articleReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_ARTICLE: {
-        console.log(ADD_ARTICLE, action.payload);
         return {
           ...state,
           articles: [ ...state.articles, action.payload ]

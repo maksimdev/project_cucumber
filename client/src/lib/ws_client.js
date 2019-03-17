@@ -23,7 +23,7 @@ socket.onerror = function(error) {
     store.dispatch({ type: 'EXTERNAL_ERROR', payload: error.message });
 };
 
-function ws_dispatch(type, payload) {
+function ws_dispatch({ type, payload }) {
     const departingAction = {type: type || 'EXTERNAL_SENT', payload: payload };
     const data = JSON.stringify(departingAction);
     //store.dispatch(departingAction); //internal dispatch actions

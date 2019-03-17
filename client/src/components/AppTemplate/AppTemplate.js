@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import { push } from 'connected-react-router'
+import { store } from '../../index';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,10 +16,10 @@ function ConnectedAppTemplate (props) {
             <Typography variant="h6" color="inherit">
               App
             </Typography>
-            <Button variant="contained" color="primary" onClick={() => {props.push('/home');}}>
+            <Button variant="contained" color="primary" onClick={() => {store.ws_dispatch(push('/home'));}}>
               Home
             </Button>
-            <Button variant="contained" color="primary" onClick={() => {props.push('/about');}}>
+            <Button variant="contained" color="primary" onClick={() => {store.ws_dispatch(push('/about'));}}>
               About
             </Button>
         </Toolbar>
@@ -28,6 +29,6 @@ function ConnectedAppTemplate (props) {
   )
 };
 
-const AppTemplate = connect(null, { push })(ConnectedAppTemplate);
+const AppTemplate = connect(null)(ConnectedAppTemplate);
 
 export default AppTemplate;

@@ -9,7 +9,7 @@ import App from "./containers/App/App";
 import About from './containers/About/About';
 import 'typeface-roboto';
 
-const store = configureStore();
+export const store = configureStore();
 
 render(
   <Provider store={store}>

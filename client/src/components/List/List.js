@@ -2,19 +2,27 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import { push } from 'connected-react-router'
+import { addArticle } from '../../redux/actions/articleActions'; 
 
 const mapStateToProps = state => ({
   articles: state.articles.articles
 });
 
+const mapDispatchToProps = dispatch => ({
+  addArticle: article => dispatch(addArticle(article))
+});
+
 function ConnectedList (props) {
-  console.log(props);
   const [article, setArticle] = useState({title: ''});
 
   const handleChange = (event) => {
     setArticle({title: event.target.value});
   };
+
+  const createArticle = () => {
+    props.addArticle(article);
+    setArticle({title: ''});
+  }
 
   return (
     <>
@@ -33,13 +41,13 @@ function ConnectedList (props) {
           placeholder="Placeholder"
           value={article.title}
         />
-      <Button variant="contained" color="primary" onClick={() => console.log('ok!')}>
+      <Button variant="contained" color="primary" onClick={createArticle}>
         Create article
       </Button>
     </>
   )
 };
 
-const List = connect(mapStateToProps, { push })(ConnectedList);
+const List = connect(mapStateToProps, mapDispatchToProps)(ConnectedList);
 
 export default List;
