@@ -1,17 +1,32 @@
-import { EXTERNAL_CONNECTED } from '../actions/externalActions';
+import {
+  EXTERNAL_CONNECTED,
+  EXTERNAL_CLOSED,
+  EXTERNAL_TERMINATED,
+  EXTERNAL_ERROR
+} from '../actions/externalActions';
 
-const initialState = {};
+const initialState = { status: 'online' };
 
 function externalReducer(state = initialState, action) {
   switch (action.type) {
     case EXTERNAL_CONNECTED: {
       return {
-        ...state
+        status: 'online'
       };
     }
-    case "@@router/LOCATION_CHANGE": {
+    case EXTERNAL_CLOSED: {
       return {
-        ...state
+        status: 'offline'
+      };
+    }
+    case EXTERNAL_TERMINATED: {
+      return {
+        status: 'offline'
+      };
+    }
+    case EXTERNAL_ERROR: {
+      return {
+        status: 'error'
       };
     }
     default:

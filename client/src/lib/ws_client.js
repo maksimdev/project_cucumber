@@ -8,7 +8,7 @@ socket.onopen = function() {
 
 socket.onclose = function(event) {
     if (event.wasClean) {
-        store.dispatch({ type: 'EXTERNAL_CLOSED', payload: {code: event.code, reason: event.reason} });
+        store.dispatch({ type: 'EXTERNAL_CLOSED' });
     } else {
         store.dispatch({ type: 'EXTERNAL_TERMINATED', payload: {code: event.code, reason: event.reason} });
     }
