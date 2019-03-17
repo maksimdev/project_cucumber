@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router'
 import configureStore, { history } from "./redux/store";
 import AppTemplate from './components/AppTemplate/AppTemplate';
@@ -18,6 +18,7 @@ render(
         <Switch>
             <Route path="/home" component={App} />
             <Route path="/about" component={About} />
+            <Route render={() => <Redirect to="/home" />} />
         </Switch>
       </AppTemplate>
     </ConnectedRouter>

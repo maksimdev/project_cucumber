@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import { addArticle } from '../../redux/actions/articleActions'; 
+import { addArticle } from '../../redux/actions/articleActions';
+import { store } from '../../index';
 
 const mapStateToProps = state => ({
   articles: state.articles.articles
-});
-
-const mapDispatchToProps = dispatch => ({
-  addArticle: article => dispatch(addArticle(article))
 });
 
 function ConnectedList (props) {
@@ -20,8 +17,10 @@ function ConnectedList (props) {
   };
 
   const createArticle = () => {
-    props.addArticle(article);
-    setArticle({title: ''});
+    if (article.title) {
+      store.ws_dispatch(addArticle(article))
+      setArticle({title: ''});
+    }
   }
 
   return (
@@ -42,12 +41,12 @@ function ConnectedList (props) {
           value={article.title}
         />
       <Button variant="contained" color="primary" onClick={createArticle}>
-        Create article
+        Create text
       </Button>
     </>
   )
 };
 
-const List = connect(mapStateToProps, mapDispatchToProps)(ConnectedList);
+const List = connect(mapStateToProps)(ConnectedList);
 
 export default List;
