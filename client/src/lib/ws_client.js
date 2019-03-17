@@ -1,5 +1,6 @@
 export default function ws_connected(store) {
 var socket = new WebSocket("ws://app.immortal.host:80");
+//var socket = new WebSocket("ws://localhost:4000");
 
 socket.onopen = function() {
     store.dispatch({ type: 'EXTERNAL_CONNECTED' });
@@ -22,14 +23,14 @@ socket.onerror = function(error) {
     store.dispatch({ type: 'EXTERNAL_ERROR', payload: error.message });
 };
 
-function send(type, payload) {
+function ws_dispatch(type, payload) {
     const departingAction = {type: type || 'EXTERNAL_SENT', payload: payload };
     const data = JSON.stringify(departingAction);
-    store.dispatch(departingAction);
+    //store.dispatch(departingAction); //internal dispatch actions
     socket.send(data);
 };
 
-store.ws_send = send;
+store.ws_dispatch = ws_dispatch;
 
 return store;
 }

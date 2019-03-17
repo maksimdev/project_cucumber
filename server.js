@@ -3,6 +3,11 @@ const path = require('path');
 const app = express();
 const expressWs = require('express-ws')(app);
 
+//broadcast
+  let aWs = expressWs.getWss('/');
+//end
+
+
 const PUBLIC_PATH = __dirname + '/client/public';
 
 const PORT = 4000;
@@ -24,8 +29,14 @@ app.use(function (req, res, next) {
 app.ws('/', function(ws, req) {
   ws.on('message', function(msg) {
     const incomingAction = JSON.parse(msg);  //doing something with incomingAction, for example sending to server reducer
+    console.log('incomingAction: ', incomingAction);
     //reducer
-    ws.send(JSON.stringify({type: 'EXTERNAL_ARTICLE_RECEIVED', payload: {id: 2, title: 'New article'} }));  //sending to server
+    //ws.send(JSON.stringify(incomingAction));  //sending from server to client
+    //broadcast
+    aWs.clients.forEach(function (client) {
+      client.send(JSON.stringify(incomingAction));
+    });
+    //broadcast_end
   });
 });
  
