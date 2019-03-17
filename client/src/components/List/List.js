@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
+import { push } from 'connected-react-router'
 
 const mapStateToProps = state => ({
   articles: state.articles.articles
 });
-
-const mapDispatchToProps = ws_send => ({
-
-})
 
 function ConnectedList (props) {
   console.log(props);
@@ -43,6 +40,6 @@ function ConnectedList (props) {
   )
 };
 
-const List = connect(mapStateToProps)(ConnectedList);
+const List = connect(mapStateToProps, { push })(ConnectedList);
 
 export default List;

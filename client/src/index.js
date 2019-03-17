@@ -1,13 +1,26 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import { Route, Switch } from 'react-router';
+import { ConnectedRouter } from 'connected-react-router'
+import configureStore, { history } from "./redux/store";
+import AppTemplate from './components/AppTemplate/AppTemplate';
 import App from "./containers/App/App";
+import About from './containers/About/About';
 import 'typeface-roboto';
+
+const store = configureStore();
 
 render(
   <Provider store={store}>
-    <App />
+    <ConnectedRouter history={history}>
+      <AppTemplate>
+        <Switch>
+            <Route path="/home" component={App} />
+            <Route path="/about" component={About} />
+        </Switch>
+      </AppTemplate>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );

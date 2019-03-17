@@ -11,6 +11,12 @@ function externalReducer(state = initialState, action) {
         ...state
       };
     }
+    case "@@router/LOCATION_CHANGE": {
+      console.log("CHECK!", action.type);
+      return {
+        ...state
+      };
+    }
     default:
       return state;
   }

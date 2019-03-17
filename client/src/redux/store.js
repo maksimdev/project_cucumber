@@ -1,11 +1,22 @@
-import { createStore, combineReducers } from "redux";
-import externalReducer from "./reducers/externalReducer";
-import articleReducer from "./reducers/articleReducer";
+import { applyMiddleware, compose, createStore } from "redux";
+import { createBrowserHistory } from 'history'
+import { routerMiddleware } from 'connected-react-router'
+import createRootReducer from './reducers/reducers';
 import ws_connected from '../lib/ws_client';
 
-const rootReducer = combineReducers({ external: externalReducer, articles: articleReducer });
+export const history = createBrowserHistory()
 
-const store = ws_connected(createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+export default function configureStore(preloadedState) {
+  const store = ws_connected(createStore(
+    createRootReducer(history),
+    preloadedState,
+    compose(
+      applyMiddleware(
+        routerMiddleware(history),
+      ),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  ))
 
-console.log(store);
-export default store;
+  return store
+}
